@@ -7,9 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const CreateTodo = () => {
   const dispatch = useDispatch();
   const taskInput = useRef();
-  let a = 1 ;
   const handleClick = () => {
-    console.log(a++)
     if (!taskInput.current.value) {
       toast.error('Enter the Task', {
         position: "top-right",

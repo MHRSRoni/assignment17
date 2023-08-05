@@ -1,6 +1,6 @@
 import Swal from "sweetalert2"
 
-export  const removeTodo = () => {
+export  const removeTodo = (dispatch,deleteHandler) => {
   Swal.fire({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
@@ -11,6 +11,7 @@ export  const removeTodo = () => {
     confirmButtonText: 'Yes, delete it!'
   }).then((result) => {
     if (result.isConfirmed) {
+      dispatch(deleteHandler())
       Swal.fire(
         'Deleted!',
         'Your file has been deleted.',

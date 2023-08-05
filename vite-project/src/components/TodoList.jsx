@@ -1,14 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RemoveTodo } from "../redux/slice/todoSlice";
+import { RemoveTodo,EditTodo } from "../redux/slice/todoSlice";
 import { removeTodo } from "./RemoveTodo";
+import { editTodo } from "./EditTodo";
 
 const TodoList = () => {
-    const dispatch = useDispatch()
-    const removeHandler = ()=>{
-        removeTodo()
-        dispatch(RemoveTodo())
-    }
     const todoItems = useSelector((state)=>state.todo.value)
+    const dispatch = useDispatch()
+    const removeHandler = ()=>
+    {
+        removeTodo(dispatch,RemoveTodo)
+    }
+    const editHandler = (i)=>{
+        editTodo(i,todoItems[i],dispatch,EditTodo)
+    }
+
+
     return (
         <div>
             <div className="container">
@@ -28,7 +34,7 @@ const TodoList = () => {
                                         <tr key={i.toString()}>
                                             <td>{item}</td>
                                             <td>
-                                                <button className="btn btn-dark btn-sm">Edit</button>
+                                                <button className="btn btn-dark btn-sm" onClick={()=>editHandler(i)}>Edit</button>
                                             </td>
                                             <td>
                                                 <button className="btn btn-danger btn-sm" onClick={()=>removeHandler()}>Remove</button>
