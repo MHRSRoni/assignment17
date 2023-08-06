@@ -20,7 +20,7 @@ const CreateTodo = () => {
         theme: "light",
         });
     } else {
-      dispatch(AddTodo(taskInput.current.value));
+      dispatch(AddTodo({id : Date.now() , text : taskInput.current.value, completed : false}));
       toast.success('Task Added Successfully', {
         position: "top-right",
         autoClose: 3000,

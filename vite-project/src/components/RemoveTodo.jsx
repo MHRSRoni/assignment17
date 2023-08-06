@@ -1,6 +1,8 @@
 import Swal from "sweetalert2"
+import store from "../redux/store/store"
+import { RemoveTodo } from "../redux/slice/todoSlice"
 
-export  const removeTodo = (dispatch,deleteHandler) => {
+export  const removeTodo = (i) => {
   Swal.fire({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
@@ -11,7 +13,7 @@ export  const removeTodo = (dispatch,deleteHandler) => {
     confirmButtonText: 'Yes, delete it!'
   }).then((result) => {
     if (result.isConfirmed) {
-      dispatch(deleteHandler())
+      store.dispatch(RemoveTodo(i))
       Swal.fire(
         'Deleted!',
         'Your file has been deleted.',

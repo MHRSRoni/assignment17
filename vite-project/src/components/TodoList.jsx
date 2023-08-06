@@ -1,19 +1,23 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RemoveTodo,EditTodo } from "../redux/slice/todoSlice";
+import {  ToogleMark } from "../redux/slice/todoSlice";
 import { removeTodo } from "./RemoveTodo";
-import { editTodo } from "./EditTodo";
+import { EditTodo } from "./EditTodo";
+import store from "../redux/store/store";
+import { useSelector } from "react-redux";
+
 
 const TodoList = () => {
-    const todoItems = useSelector((state)=>state.todo.value)
-    const dispatch = useDispatch()
-    const removeHandler = ()=>
+    const todoItems = useSelector((state)=>state.todo)
+    const checkboxHandler =(i)=>
     {
-        removeTodo(dispatch,RemoveTodo)
+        store.dispatch(ToogleMark(i))
+    }
+    const removeHandler = (i)=>
+    {
+        removeTodo(i)
     }
     const editHandler = (i)=>{
-        editTodo(i,todoItems[i],dispatch,EditTodo)
+        EditTodo(i)
     }
-
 
     return (
         <div>
@@ -23,21 +27,27 @@ const TodoList = () => {
                         <table className="table">
                             <thead>
                                 <tr>
+                                    <th>Mark</th>
                                     <th>Task</th>
                                     <th>Edit</th>
                                     <th>Remove</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {todoItems.map((item, i)=>{
+                                {todoItems && todoItems.map((item)=>{
                                     return(
-                                        <tr key={i.toString()}>
-                                            <td>{item}</td>
+                                        <tr key={item.id}>
                                             <td>
-                                                <button className="btn btn-dark btn-sm" onClick={()=>editHandler(i)}>Edit</button>
+                                                <input  type="checkbox" checked={item.completed} onChange={()=>checkboxHandler(item.id)} />
                                             </td>
                                             <td>
-                                                <button className="btn btn-danger btn-sm" onClick={()=>removeHandler()}>Remove</button>
+                                                <p className={`${item.completed ? "text-decoration-line-through" : ""}`}>{item.text}</p>
+                                            </td>
+                                            <td>
+                                                <button className="btn btn-dark btn-sm" onClick={()=>editHandler(item.id)}>Edit</button>
+                                            </td>
+                                            <td>
+                                                <button className="btn btn-danger btn-sm" onClick={()=>removeHandler(item.id)}>Remove</button>
                                             </td>
                                         </tr>
                                     )
